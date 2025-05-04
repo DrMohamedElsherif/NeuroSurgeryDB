@@ -1,0 +1,142 @@
+-- Create the Tables for the Database
+
+CREATE TABLE insurance (
+    name VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE patients (
+    patientid SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    gender CHAR(1) CHECK (gender IN ('M', 'F', 'O')),
+    dob DATE,
+    address VARCHAR(255) NOT NULL,
+    insurancename VARCHAR(100) NOT NULL,
+    FOREIGN KEY (insurancename) REFERENCES insurance(name)
+);
+
+CREATE TABLE diseases (
+    name VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE specialty (
+    name VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE neurosurgeons (
+    surgeonid SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    specialtyname VARCHAR(100),
+    FOREIGN KEY (specialtyname) REFERENCES specialty(name)
+);
+
+CREATE TABLE consultations (
+    conid SERIAL PRIMARY KEY,
+    doc DATE,
+    new CHAR(1) CHECK (new IN ('y', 'n')),
+    patientid INT,
+    surgeonid INT,
+    FOREIGN KEY (patientid) REFERENCES patients(patientid),
+    FOREIGN KEY (surgeonid) REFERENCES neurosurgeons(surgeonid)
+);
+
+CREATE TABLE surgery (
+    surgeryid SERIAL PRIMARY KEY,
+    procedurename VARCHAR(255),
+    patientid INT,
+    surgeonid INT,
+    FOREIGN KEY (patientid) REFERENCES patients(patientid),
+    FOREIGN KEY (surgeonid) REFERENCES neurosurgeons(surgeonid)
+);
+
+CREATE TABLE patientsdiseases (
+    patientid INT,
+    diseasename VARCHAR(100),
+	PRIMARY KEY (patientid, diseasename),
+    FOREIGN KEY (patientid) REFERENCES patients(patientid),
+    FOREIGN KEY (diseasename) REFERENCES diseases(name)
+);
+
+-- Populating the Insurance table with chatGPT-generated fake data
+INSERT INTO insurance (name) VALUES ('HealthPlus');
+INSERT INTO insurance (name) VALUES ('CareWell');
+INSERT INTO insurance (name) VALUES ('MediAssist');
+INSERT INTO insurance (name) VALUES ('BlueShield');
+INSERT INTO insurance (name) VALUES ('HealthCareOne');
+INSERT INTO insurance (name) VALUES ('MediCare');
+
+
+-- Populating the Patients table with chatGPT-generated fake data
+INSERT INTO patients (name, gender, dob, address, insurancename) VALUES 
+('John Doe', 'M', '1985-07-23', '123 Main St, Cityville', 'HealthPlus'),
+('Jane Smith', 'F', '1990-02-14', '456 Elm St, Townsville', 'CareWell'),
+('Alex Johnson', 'O', '1978-11-11', '789 Oak St, Villageville', 'MediAssist');
+INSERT INTO patients (name, gender, dob, address, insurancename) VALUES 
+('Mary Johnson', 'F', '1970-05-10', '321 Maple St, Villagetown', 'BlueShield'),
+('Robert Williams', 'M', '1988-09-30', '987 Pine St, Mountainville', 'HealthCareOne'),
+('Taylor Davis', 'O', '1995-12-15', '654 Cedar St, Suburbia', 'MediCare');
+
+
+-- Populatingo the Diseases table with chatGPT-generated fake data
+INSERT INTO diseases (name) VALUES ('Migraine');
+INSERT INTO diseases (name) VALUES ('Epilepsy');
+INSERT INTO diseases (name) VALUES ('Brain Tumor');
+INSERT INTO diseases (name) VALUES ('Spinal Cord Injury');
+INSERT INTO diseases (name) VALUES ('Parkinsons Disease');
+INSERT INTO diseases (name) VALUES ('Stroke');
+
+
+-- Populating the Specialty table with chatGPT-generated fake data
+INSERT INTO specialty (name) VALUES ('Neurosurgery');
+INSERT INTO specialty (name) VALUES ('Pediatric Neurosurgery');
+INSERT INTO specialty (name) VALUES ('Neuro-Oncology');
+INSERT INTO specialty (name) VALUES ('Spine Surgery');
+INSERT INTO specialty (name) VALUES ('Endovascular Neurosurgery');
+INSERT INTO specialty (name) VALUES ('Functional Neurosurgery');
+
+
+-- Populating the Neurosurgeons table with chatGPT-generated fake data
+INSERT INTO neurosurgeons (name, email, specialtyname) VALUES 
+('Dr. Emily Brown', 'ebrown@hospital.com', 'Neurosurgery'),
+('Dr. Michael Green', 'mgreen@hospital.com', 'Pediatric Neurosurgery'),
+('Dr. Sarah White', 'swhite@hospital.com', 'Neuro-Oncology');
+INSERT INTO neurosurgeons (name, email, specialtyname) VALUES 
+('Dr. David Lee', 'dlee@hospital.com', 'Spine Surgery'),
+('Dr. Rachel Clark', 'rclark@hospital.com', 'Endovascular Neurosurgery'),
+('Dr. Andrew Martinez', 'amartinez@hospital.com', 'Functional Neurosurgery');
+
+
+-- Populating the Consultations table with chatGPT-generated fake data
+INSERT INTO consultations (doc, new, patientid, surgeonid) VALUES 
+('2024-01-15', 'y', 1, 1),
+('2024-02-10', 'n', 2, 2),
+('2024-03-05', 'y', 3, 3);
+INSERT INTO consultations (doc, new, patientid, surgeonid) VALUES 
+('2024-04-20', 'y', 4, 4),
+('2024-05-18', 'n', 5, 5),
+('2024-06-10', 'y', 6, 6);
+
+
+-- Populating the Surgery table with chatGPT-generated fake data
+INSERT INTO surgery (procedurename, patientid, surgeonid) VALUES 
+('Craniotomy', 1, 1),
+('Brain Tumor Resection', 2, 2),
+('Epilepsy Surgery', 3, 3);
+INSERT INTO surgery (procedurename, patientid, surgeonid) VALUES 
+('Spinal Fusion', 4, 4),
+('Thrombectomy', 5, 5),
+('Deep Brain Stimulation', 6, 6);
+
+
+-- Populating the PatientsDiseases table with chatGPT-generated fake data
+INSERT INTO patientsdiseases (patientid, diseasename) VALUES 
+(1, 'Migraine'),
+(2, 'Brain Tumor'),
+(3, 'Epilepsy');
+INSERT INTO patientsdiseases (patientid, diseasename) VALUES 
+(4, 'Spinal Cord Injury'),
+(5, 'Parkinsons Disease'),
+(6, 'Stroke');
+
+-- End of My DataBase SQL code
+
