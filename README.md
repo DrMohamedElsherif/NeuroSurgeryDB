@@ -1,4 +1,4 @@
-NeuroSurgeryDB is a preliminary design for a database system designed to store and manage detailed information on patients treated within the Department of Neurosurgery. The schema captures a wide range of data, including:
+**NeuroSurgeryDB** is a preliminary design for a database system designed to store and manage detailed information on patients treated within the Department of Neurosurgery. The schema captures a wide range of data, including:
 
 - Patient demographics (e.g., age, sex, address, contact information)
 
